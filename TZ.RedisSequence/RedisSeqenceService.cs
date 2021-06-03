@@ -8,7 +8,7 @@ using TZ.SequenceGenerator;
 
 namespace TZ.RedisSequence
 {
-    public class RedisSequenceService:ISequenceService
+    public partial class RedisSequenceService:ISequenceService
     {
         private static int callCount = 0;
         private static List<ConnectionMultiplexer> redisList;

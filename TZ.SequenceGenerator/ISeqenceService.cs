@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TZ.SequenceGenerator
 {
     public interface ISequenceService
     {
         /// <summary>
-        /// 初始化起始Id
+        /// 初始化起始序列
         /// Redis Id算法使用
         /// </summary>
         /// <param name="sequenceKey">序列键名</param>
@@ -24,11 +26,29 @@ namespace TZ.SequenceGenerator
         long GetSequence(string sequenceKey);
 
         /// <summary>
+        /// 异步获取序列
+        /// </summary>
+        /// <param name="sequenceKey">序列键名</param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<long> GetSequenceAsync(string sequenceKey, CancellationToken token = default);
+
+        /// <summary>
         /// 按天获取序列
         /// </summary>
         /// <param name="sequenceKeyPrefix">序列键前缀</param>
         /// <param name="dateTimeFormat">时间格式</param>
         /// <returns></returns>
         long GetDaySequence(string sequenceKeyPrefix, string dateTimeFormat = "yyyyMMdd");
+
+        /// <summary>
+        /// 异步按天获取序列
+        /// </summary>
+        /// <param name="sequenceKeyPrefix">序列键前缀</param>
+        /// <param name="dateTimeFormat">时间格式</param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<long> GetDaySequenceAsync(string sequenceKeyPrefix, string dateTimeFormat = "yyyyMMdd",
+            CancellationToken token = default);
     }
 }

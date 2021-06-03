@@ -4,11 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/tanyongzheng/TZ.SequenceGenerator</PackageProjectUrl>
-    <Description>Redis分布式序列生成器</Description>
+    <Description>Redis分布式序列生成器
+1.新增异步方法</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>tanyongzheng</Authors>
     <Company />
     <Product />
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +18,7 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
+    <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

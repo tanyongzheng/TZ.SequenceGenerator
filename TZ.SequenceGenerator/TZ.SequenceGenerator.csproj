@@ -4,11 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/tanyongzheng/TZ.SequenceGenerator</PackageProjectUrl>
-    <Description>分布式序列生成器接口</Description>
+    <Description>分布式序列生成器接口
+1.新增异步方法</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>tanyongzheng</Authors>
     <Company />
     <Product />
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
