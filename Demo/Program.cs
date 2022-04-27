@@ -33,7 +33,7 @@ namespace Demo
             var sequenceKey = "OrderNum";
             if (!_isInitStartSequence)
             {
-                sequenceService.InitStartSequence(sequenceKey, 0);
+                sequenceService.InitStartSequence(sequenceKey, 1);
                 _isInitStartSequence = true;
             }
             sequenceService.ResetAscending(sequenceKey);

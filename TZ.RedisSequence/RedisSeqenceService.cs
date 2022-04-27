@@ -80,6 +80,40 @@ namespace TZ.RedisSequence
         {
             lock (lockObj)
             {
+                // 判断是否已初始化
+                var hasInit = true;
+
+                for (var i = 0; i < redisList.Count; i++)
+                {
+                    var redis = redisList[i];
+                    if (!redis.GetDatabase().KeyExists(sequenceKey))
+                    {
+                        hasInit = false;
+                        break;
+                    }
+                }
+                
+                //已初始化且开始序号为1
+                if (hasInit&& startSequence == 1)
+                {
+                    return;
+                }
+
+                //未初始化且开始序号为1
+                if (!hasInit&& startSequence==1)
+                {
+                    for (var i=0;i<redisList.Count;i++)
+                    {
+                        var initSequence = i - increment + 1;
+                        var redis = redisList[i];
+                        if (expiry.HasValue)
+                            redis.GetDatabase().StringSet(sequenceKey, initSequence, expiry.Value);
+                        else
+                            redis.GetDatabase().StringSet(sequenceKey, initSequence);
+                    }
+                    return;
+                }
+
                 startSequence = startSequence - increment + 1;
                 foreach (var redis in redisList)
                 {
