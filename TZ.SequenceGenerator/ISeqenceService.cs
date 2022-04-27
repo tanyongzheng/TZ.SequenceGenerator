@@ -19,6 +19,12 @@ namespace TZ.SequenceGenerator
         void InitStartSequence(string sequenceKey, long startSequence, TimeSpan? expiry = null);
 
         /// <summary>
+        /// 重新设置升序
+        /// </summary>
+        /// <param name="sequenceKey">序列键名</param>
+        void ResetAscending(string sequenceKey);
+
+        /// <summary>
         /// 获取序列
         /// </summary>
         /// <param name="sequenceKey">序列键名</param>

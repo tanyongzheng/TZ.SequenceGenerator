@@ -36,6 +36,8 @@ namespace Demo
                 sequenceService.InitStartSequence(sequenceKey, 0);
                 _isInitStartSequence = true;
             }
+            sequenceService.ResetAscending(sequenceKey);
+
             for (var i = 0; i < 50; i++)
             {
                 await Task.Run(async() => {

@@ -93,6 +93,58 @@ namespace TZ.RedisSequence
         }
 
         /// <summary>
+        /// 重新设置升序（补齐后面Redis顺序错乱的序号，调用必须放到初始化起始序列方法后面）
+        /// 多个Redis连接，如程序重启导致后面的序号小于前面的，则需要调用该方法（适用于单个程序）
+        /// 多程序共用要保持升序该类库不适用（加分布式锁或单独部署一个序号生成器程序，或者只用一个Redis实例）
+        /// </summary>
+        /// <param name="sequenceKey">序列键名</param>
+        /// <returns></returns>
+        public void ResetAscending(string sequenceKey)
+        {
+            lock (lockObj)
+            {
+                long maxSequence = 0;
+                int maxSequenceRedisIndex = -1;
+                for (var i=0;i<redisList.Count;i++)
+                {
+                    var redis = redisList[i];
+                    var sequenceStr =redis.GetDatabase().StringGet(sequenceKey);
+                    if (sequenceStr.IsNull)
+                    {
+                        throw new Exception("序号未初始化，请先调用初始化方法");
+                    }
+
+                    if(!sequenceStr.TryParse(out long currentSequence))
+                    {
+                        throw new Exception($"第{i+1}个Redis的[{sequenceKey}]序号是非数字");
+                    }
+
+                    if(currentSequence>maxSequence)
+                    {
+                        maxSequence = currentSequence;
+                        maxSequenceRedisIndex = i;
+                    }
+                }
+
+                if (maxSequenceRedisIndex == -1)
+                {
+                    return;
+                }
+
+                var startIndex = maxSequenceRedisIndex + 1;
+                if (startIndex == redisList.Count) return;
+
+                var startSequence = maxSequence;
+                for (var i = startIndex; i < redisList.Count; i++)
+                {
+                    startSequence += 1;
+                    var redis = redisList[i];
+                    redis.GetDatabase().StringSet(sequenceKey, startSequence);
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取序列
         /// </summary>
         /// <param name="sequenceKey">序列键名</param>
