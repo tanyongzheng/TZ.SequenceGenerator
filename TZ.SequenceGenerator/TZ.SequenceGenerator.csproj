@@ -5,14 +5,13 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/tanyongzheng/TZ.SequenceGenerator</PackageProjectUrl>
     <Description>
-		分布式序列生成器接口 
-       1. 重置升序
+		分布式序列生成器接口
     </Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>tanyongzheng</Authors>
     <Company />
     <Product />
-    <Version>1.2.0</Version>
+    <Version>1.2.2</Version>
   </PropertyGroup>
 
 </Project>

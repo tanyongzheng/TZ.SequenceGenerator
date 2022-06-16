@@ -75,8 +75,9 @@ namespace TZ.RedisSequence
         /// <param name="sequenceKey">序列键名</param>
         /// <param name="startSequence">起始序列</param>
         /// <param name="expiry">过期时间，不填则永不过期，适用于按天、按月做序列</param>
+        /// <param name="skipInitialized">是否跳过已初始化（默认跳过，防止重启多次执行）</param>
         /// <returns></returns>
-        public void InitStartSequence(string sequenceKey, long startSequence, TimeSpan? expiry=null)
+        public void InitStartSequence(string sequenceKey, long startSequence, TimeSpan? expiry=null, bool skipInitialized = true)
         {
             lock (lockObj)
             {
@@ -93,8 +94,8 @@ namespace TZ.RedisSequence
                     }
                 }
                 
-                //已初始化且开始序号为1
-                if (hasInit&& startSequence == 1)
+                //已初始化跳过
+                if (hasInit&& skipInitialized)
                 {
                     return;
                 }

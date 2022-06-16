@@ -15,8 +15,9 @@ namespace TZ.SequenceGenerator
         /// <param name="sequenceKey">序列键名</param>
         /// <param name="startSequence">起始序列</param>
         /// <param name="expiry">过期时间，不填则永不过期，适用于按天、按月做序列</param>
+        /// <param name="skipInitialized">是否跳过已初始化（默认跳过，防止重启多次执行）</param>
         /// <returns></returns>
-        void InitStartSequence(string sequenceKey, long startSequence, TimeSpan? expiry = null);
+        void InitStartSequence(string sequenceKey, long startSequence, TimeSpan? expiry = null, bool skipInitialized = true);
 
         /// <summary>
         /// 重新设置升序

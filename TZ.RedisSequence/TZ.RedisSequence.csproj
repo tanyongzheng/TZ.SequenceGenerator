@@ -6,13 +6,12 @@
     <PackageProjectUrl>https://github.com/tanyongzheng/TZ.SequenceGenerator</PackageProjectUrl>
 	  <Description>
 		  分布式序列生成器接口
-		  1. 重置升序
 	  </Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>tanyongzheng</Authors>
     <Company />
     <Product />
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
