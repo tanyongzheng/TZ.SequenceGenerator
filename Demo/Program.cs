@@ -36,14 +36,19 @@ namespace Demo
                 sequenceService.InitStartSequence(sequenceKey, 1);
                 _isInitStartSequence = true;
             }
-            sequenceService.ResetAscending(sequenceKey);
-
+            //sequenceService.ResetAscending(sequenceKey);
+            
+            var a1 = sequenceService.GetSequence(sequenceKey);
+            var a2 = sequenceService.GetSequence(sequenceKey);
+            var a3 = sequenceService.GetSequence(sequenceKey);
+            /*
             for (var i = 0; i < 50; i++)
             {
                 await Task.Run(async() => {
                     await GetSequenceAsync(100);
                 });
             }
+            */
             Console.ReadKey();
         }
 

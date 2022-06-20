@@ -240,6 +240,11 @@ namespace TZ.RedisSequence
         /// <returns></returns>
         private ConnectionMultiplexer GetConnectionMultiplexer()
         {
+            if (redisList.Count == 1)
+            {
+                return redisList[0];
+            }
+
             lock (getRedisLockObj)
             {
                 if (callCount == int.MaxValue)
@@ -248,6 +253,28 @@ namespace TZ.RedisSequence
                 int callRedisIndex = callCount % redisList.Count;
                 var redis = redisList[callRedisIndex];
                 callCount++;
+
+                // 判断是否故障
+                var failure = false;
+                try
+                {
+                    var db = redis.GetDatabase();
+                    db.Ping();
+                }
+                catch(Exception ex)
+                {
+                    failure = true;                 
+                }
+                // 多个Redis实例实现故障转移
+                if (failure)
+                {
+                    // 暂时转移到下一个实例，人工处理好后能继续工作
+                    // 后续也可专门配置一台故障转移的实例
+                    callRedisIndex = callCount % redisList.Count;
+                    redis = redisList[callRedisIndex];
+                    callCount++;
+                }
+
                 return redis;
             }
         }
